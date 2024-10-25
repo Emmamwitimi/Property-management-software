@@ -11,8 +11,7 @@ export default function Landlords() {
     landlord_name: '',
     phone_number: '',
     email: '',
-    address: '', // New field for address
-  });
+      });
   const [editingLandlord, setEditingLandlord] = useState(null);
 
   // Fetch landlords list
@@ -54,8 +53,7 @@ export default function Landlords() {
       landlord_name: '',
       phone_number: '',
       email: '',
-      address: '', // Initialize address field
-    });
+          });
     setIsModalOpen(true);
   };
 
@@ -92,11 +90,7 @@ export default function Landlords() {
       accessorKey: 'email',
       header: 'Email',
     },
-    {
-      accessorKey: 'address', // New column for address
-      header: 'Address',
-    },
-    {
+      {
       accessorKey: 'properties_owned',
       header: 'Properties Owned',
       cell: ({ row }) => row.original.properties_owned?.length || 0,

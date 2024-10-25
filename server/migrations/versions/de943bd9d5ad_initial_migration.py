@@ -1,8 +1,8 @@
-"""initial migration
+"""Initial migration
 
-Revision ID: 54892f581444
+Revision ID: de943bd9d5ad
 Revises: 
-Create Date: 2024-10-23 20:19:47.080779
+Create Date: 2024-10-25 21:14:35.889811
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '54892f581444'
+revision = 'de943bd9d5ad'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -41,9 +41,9 @@ def upgrade():
     sa.Column('property_name', sa.String(length=100), nullable=False),
     sa.Column('location', sa.String(length=100), nullable=False),
     sa.Column('landlord_id', sa.Integer(), nullable=False),
-    sa.Column('house_number', sa.String(length=10), nullable=False),
-    sa.Column('is_occupied', sa.Boolean(), nullable=True),
     sa.Column('number_of_rooms', sa.Integer(), nullable=False),
+    sa.Column('is_occupied', sa.Boolean(), nullable=True),
+    sa.Column('house_number', sa.String(length=10), nullable=False),
     sa.Column('occupied_rooms', sa.Integer(), nullable=False),
     sa.Column('price_bedsitter', sa.Float(), nullable=True),
     sa.Column('price_one_bedroom', sa.Float(), nullable=True),
