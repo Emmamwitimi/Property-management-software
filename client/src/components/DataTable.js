@@ -1,16 +1,10 @@
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-  getPaginationRowModel,
-} from '@tanstack/react-table';
+import { useReactTable, flexRender } from "@tanstack/react-table";
 
 export function DataTable({ columns, data }) {
   const table = useReactTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    // Directly use the table instance without specific row model options
   });
 
   return (
