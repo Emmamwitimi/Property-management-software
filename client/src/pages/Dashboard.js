@@ -26,18 +26,49 @@ const StatCard = ({ title, value, icon: Icon }) => (
 );
 
 export default function Dashboard() {
-  const { data: stats } = useQuery({
-    queryKey: ['dashboard-stats'],
+  const { data: tenantsData } = useQuery({
+    queryKey: ['tenants'],
     queryFn: async () => {
-      const { data } = await axios.get('http://localhost:5000/admin/dashboard');
+      const { data } = await axios.get('http://localhost:5000/tenants');
       return data;
     },
   });
 
+  const { data: landlordsData } = useQuery({
+    queryKey: ['landlords'],
+    queryFn: async () => {
+      const { data } = await axios.get('http://localhost:5000/landlords');
+      return data;
+    },
+  });
+
+  const { data: propertiesData } = useQuery({
+    queryKey: ['properties'],
+    queryFn: async () => {
+      const { data } = await axios.get('http://localhost:5000/properties');
+      return data;
+    },
+  });
+
+  const revenue = "$50,000"; // Replace with your logic to fetch revenue
+
+  // Prepare stats object
+  const stats = {
+    tenants: tenantsData ? tenantsData.length : 0,
+    landlords: landlordsData ? landlordsData.length : 0,
+    properties: propertiesData ? propertiesData.length : 0,
+    revenue,
+    averageRent: propertiesData
+      ? (propertiesData.reduce((total, property) => total + property.price_one_bedroom, 0) / propertiesData.length).toFixed(2)
+      : 0,
+  };
+
+  // Prepare chart data
   const chartData = [
-    { name: 'Bedsitter', value: 15 },
-    { name: '1 Bedroom', value: 25 },
-    { name: '2 Bedroom', value: 10 },
+    { name: 'Total Properties', value: stats.properties },
+    { name: 'Total Tenants', value: stats.tenants },
+    { name: 'Total Landlords', value: stats.landlords },
+    { name: 'Average Rent', value: stats.averageRent },
   ];
 
   return (
@@ -47,28 +78,33 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Total Properties"
-          value={stats?.properties || 0}
+          value={stats.properties}
           icon={Building2}
         />
         <StatCard
           title="Total Tenants"
-          value={stats?.tenants || 0}
+          value={stats.tenants}
           icon={Users}
         />
         <StatCard
           title="Total Landlords"
-          value={stats?.landlords || 0}
+          value={stats.landlords}
           icon={UserCircle}
         />
         <StatCard
           title="Revenue"
-          value="$50,000"
+          value={stats.revenue}
+          icon={DollarSign}
+        />
+        <StatCard
+          title="Average Rent"
+          value={`$${stats.averageRent}`}
           icon={DollarSign}
         />
       </div>
 
       <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h2 className="text-lg font-semibold mb-4">Property Distribution</h2>
+        <h2 className="text-lg font-semibold mb-4">Distribution Overview</h2>
         <div className="h-[300px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData}>

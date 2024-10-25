@@ -27,6 +27,21 @@ def admin_required(f):
         return f(*args, **kwargs)
     return wrap
 
+# House Type Resource
+class HouseTypeResource(Resource):
+    def get(self):
+        # Define available house types
+        house_types = [
+            "Bedsitter",
+            "One Bedroom",
+            "Two Bedroom",
+            "Studio Apartment",
+            "Duplex",
+            "Villa",
+            "Townhouse"
+        ]
+        return jsonify(house_types), 200
+
 # Tenant Resource
 class TenantResource(Resource):
     def get(self, id=None):
@@ -35,15 +50,19 @@ class TenantResource(Resource):
             tenant = get_object_or_404(Tenant, id)
             return TenantSchema().dump(tenant), 200
         
-        # Fetch all tenants or filter by landlord_id/property_id
+        # Fetch all tenants or filter by landlord_id/property_id/house_type
         landlord_id = request.args.get('landlord_id')
         property_id = request.args.get('property_id')
+        house_type = request.args.get('house_type')  # New filter for house type
+
         query = Tenant.query
         
         if landlord_id:
             query = query.filter_by(landlord_id=landlord_id)
         if property_id:
             query = query.filter_by(property_id=property_id)
+        if house_type:  # Filter by house type if provided
+            query = query.filter_by(house_type=house_type)
         
         tenants = query.all()
         return TenantSchema(many=True).dump(tenants), 200
@@ -92,6 +111,7 @@ class LandlordResource(Resource):
             landlord = get_object_or_404(Landlord, id)
             return LandlordSchema().dump(landlord), 200
         
+        # Fetch all landlords
         landlords = Landlord.query.all()
         return LandlordSchema(many=True).dump(landlords), 200
 
@@ -139,6 +159,7 @@ class PropertyResource(Resource):
             property_instance = get_object_or_404(Property, id)
             return PropertySchema().dump(property_instance), 200
         
+        # Fetch all properties
         properties = Property.query.all()
         return PropertySchema(many=True).dump(properties), 200
 
@@ -196,6 +217,10 @@ def admin_dashboard():
 
 
 # Define routes for the API resources
+api.add_resource(HouseTypeResource, '/house_types')  # Add this line
 api.add_resource(TenantResource, '/tenants', '/tenants/<int:id>')
 api.add_resource(LandlordResource, '/landlords', '/landlords/<int:id>')
 api.add_resource(PropertyResource, '/properties', '/properties/<int:id>')
+
+if __name__ == '__main__':
+    app.run(debug=True)

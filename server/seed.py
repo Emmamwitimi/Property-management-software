@@ -78,8 +78,13 @@ def create_tenants(properties, num_tenants=30):
 # Main function to generate fake data and print IDs
 def main():
     with app.app_context():
+        # Drop all tables and recreate them
+        print("Dropping existing tables...")
+        db.drop_all()
+        db.create_all()
+        
         print("Creating fake data...")
-
+        
         # Create landlords
         landlords = create_landlords()
         print(f"Created {len(landlords)} landlords.")
