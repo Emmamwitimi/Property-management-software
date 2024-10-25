@@ -48,8 +48,9 @@
 
 // export default App;
 
-import React from "react"; // Ensure React is imported
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+// App.js
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
 import Layout from "./components/Layout";
@@ -65,7 +66,7 @@ const queryClient = new QueryClient();
 
 // ProtectedRoute component to guard routes
 function ProtectedRoute({ children }) {
-  const { isLoggedIn } = useAuth(); // Ensure useAuth is called within a functional component
+  const { isLoggedIn } = useAuth();
   return isLoggedIn ? children : <Navigate to="/login" />;
 }
 
@@ -73,26 +74,24 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <BrowserRouter>
-          <Toaster position="top-right" />
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <Layout />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<Dashboard />} />
-              <Route path="properties" element={<Properties />} />
-              <Route path="tenants" element={<Tenants />} />
-              <Route path="landlords" element={<Landlords />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+        <Toaster position="top-right" />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Dashboard />} />
+            <Route path="properties" element={<Properties />} />
+            <Route path="tenants" element={<Tenants />} />
+            <Route path="landlords" element={<Landlords />} />
+          </Route>
+        </Routes>
       </AuthProvider>
     </QueryClientProvider>
   );

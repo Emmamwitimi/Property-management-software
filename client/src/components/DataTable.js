@@ -1,10 +1,13 @@
-import { useReactTable, flexRender } from "@tanstack/react-table";
+//import { useReactTable, flexRender } from "@tanstack/react-table";
+
+import { useReactTable, flexRender, getCoreRowModel } from "@tanstack/react-table";
 
 export function DataTable({ columns, data }) {
+  // Create table instance
   const table = useReactTable({
     data,
     columns,
-    // Directly use the table instance without specific row model options
+    getCoreRowModel: getCoreRowModel(), // Ensure you import this
   });
 
   return (
