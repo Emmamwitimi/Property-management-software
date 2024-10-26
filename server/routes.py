@@ -159,18 +159,20 @@ class PropertyResource(Resource):
     def put(self, id):
         property_instance = get_object_or_404(Property, id)
         data = request.get_json()
-        property_schema = PropertySchema(partial=True)
+        property_schema = PropertySchema()  # Don't set partial=True to allow full updates
         
         try:
             validated_data = property_schema.load(data)
         except ValidationError as err:
             return jsonify(err.messages), 400
         
+        # Update the property instance with the validated data
         for key, value in validated_data.items():
-            setattr(property_instance, key, value)
+            if key != 'id':  # Ensure ID cannot be updated
+                setattr(property_instance, key, value)
         
         db.session.commit()
-        return property_schema.dump(property_instance), 200
+        return jsonify(property_schema.dump(property_instance)), 200  # Wrap response in jsonify
 
     def delete(self, id):
         property_instance = get_object_or_404(Property, id)

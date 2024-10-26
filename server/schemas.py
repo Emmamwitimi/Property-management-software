@@ -32,24 +32,22 @@ class LandlordSchema(Schema):
 
 # Property schema
 class PropertySchema(Schema):
-    id = fields.Int(dump_only=True)
+    id = fields.Int(dump_only=True)  # ID should remain dump_only
     property_name = fields.String(required=True, validate=validate.Length(min=1, max=100))
     location = fields.String(required=True, validate=validate.Length(min=1, max=100))
     landlord_id = fields.Int(required=True)
     number_of_rooms = fields.Int(required=True)
-    is_occupied = fields.Boolean(dump_only=True)
+    is_occupied = fields.Boolean()  # Remove dump_only to allow updates
     house_number = fields.String(required=True, validate=validate.Length(min=1, max=10))
-    occupied_rooms = fields.Int(dump_only=True)  # Automatically managed, so dump_only
+    occupied_rooms = fields.Int()  # Remove dump_only to allow updates
     price_bedsitter = fields.Float()
     price_one_bedroom = fields.Float()
     price_two_bedroom = fields.Float()
-
     # Relationship to Tenants
     tenants = fields.Nested('TenantSchema', many=True, only=("id", "tenant_name", "house_number"), dump_only=True)
 
     # Relationship to Landlord
     landlord = fields.Nested('LandlordSchema', only=("id", "landlord_name"), dump_only=True)
-
 # User schema for admin and user data
 class UserSchema(Schema):
     id = fields.Int(dump_only=True)
