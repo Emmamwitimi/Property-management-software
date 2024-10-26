@@ -15,7 +15,7 @@ const navigation = [
 
 export default function Sidebar() {
   return (
-    <aside className="fixed left-0 top-[57px] w-64 h-[calc(100vh-57px)] bg-white border-r border-gray-200">
+    <aside className="mt-20 fixed left-0 top-[57px] w-64 h-[calc(100vh-57px)] bg-white border-r border-gray-200">
       <div className="h-full px-3 py-4 overflow-y-auto">
         <ul className="space-y-2 font-medium">
           {navigation.map((item) => (
