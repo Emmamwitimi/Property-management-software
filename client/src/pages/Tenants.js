@@ -149,7 +149,7 @@ export default function Tenants() {
   ];
 
   return (
-    <div className="space-y-6 px-6 mt-20 relative ml-64">
+    <div className="space-y-6 px-4 mt-20 relative ml-64">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900">Tenants</h1>
         <button
@@ -176,25 +176,32 @@ export default function Tenants() {
         </select>
       </div>
 
-      <DataTable columns={columns} data={filteredTenants || []} />
+      <div className="overflow-x-auto">
+        <DataTable columns={columns} data={filteredTenants || []} />
+      </div>
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96 max-h-[80vh] overflow-auto">
+          <div className="mt-20 bg-white p-6 rounded-lg shadow-lg w-full max-w-md h-full max-h-[80vh] overflow-y-auto">
             <h2 className="text-lg font-semibold mb-4">
               {editingTenant ? 'Edit Tenant' : 'Add Tenant'}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               {Object.keys(formState).map((key) => (
-                <input
-                  key={key}
-                  type="text"
-                  name={key}
-                  value={formState[key]}
-                  onChange={(e) => setFormState({ ...formState, [key]: e.target.value })}
-                  placeholder={key.replace('_', ' ').toUpperCase()}
-                  className="w-full p-2 border border-gray-300 rounded"
-                />
+                <div key={key}>
+                  <label htmlFor={key} className="block text-sm font-medium text-gray-700">
+                    {key.replace('_', ' ').toUpperCase()}
+                  </label>
+                  <input
+                    type="text"
+                    name={key}
+                    id={key}
+                    value={formState[key]}
+                    onChange={(e) => setFormState({ ...formState, [key]: e.target.value })}
+                    placeholder={`Enter ${key.replace('_', ' ')}`}
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-300"
+                  />
+                </div>
               ))}
               <div className="flex justify-end space-x-4">
                 <button onClick={() => setIsModalOpen(false)} type="button" className="text-gray-600 hover:underline">

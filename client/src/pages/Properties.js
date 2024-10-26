@@ -82,7 +82,7 @@ export default function Properties() {
     }
   };
 
-  // Define columns after handleEdit and handleDelete are defined
+  // Define columns for the data table
   const columns = [
     {
       accessorKey: 'property_name',
@@ -127,10 +127,13 @@ export default function Properties() {
   }
 
   return (
-    <div className="space-y-6 ml-64">
+    <div className="space-y-6 ml-64 mt-20 relative">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900">Properties</h1>
-        <button onClick={handleAdd} className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+        <button 
+          onClick={handleAdd} 
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
+        >
           <Plus className="h-5 w-5 mr-2" />
           Add Property
         </button>
@@ -140,9 +143,9 @@ export default function Properties() {
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+          <div className="mt-20 bg-white p-6 rounded-lg shadow-lg w-full max-w-md h-full max-h-[80vh] overflow-y-auto">
             <h2 className="text-lg font-semibold mb-4">{editingProperty ? 'Edit Property' : 'Add Property'}</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4 ">
               {Object.keys(formState).map((key) => (
                 <input
                   key={key}
@@ -151,12 +154,12 @@ export default function Properties() {
                   value={formState[key]}
                   onChange={(e) => setFormState({ ...formState, [key]: e.target.value })}
                   placeholder={key.replace('_', ' ')}
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 />
               ))}
               <div className="flex justify-end space-x-4">
                 <button onClick={() => setIsModalOpen(false)} type="button" className="text-gray-600 hover:underline">Cancel</button>
-                <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Save</button>
+                <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Save</button>
               </div>
             </form>
           </div>
