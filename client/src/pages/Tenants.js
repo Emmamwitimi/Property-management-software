@@ -36,13 +36,13 @@ export default function Tenants() {
   });
 
   // Fetch properties list for property selection
-  const { data: properties } = useQuery({
-    queryKey: ['properties'],
-    queryFn: async () => {
-      const { data } = await axios.get('http://localhost:5000/properties');
-      return data;
-    },
-  });
+  // const { data: properties } = useQuery({
+  //   queryKey: ['properties'],
+  //   queryFn: async () => {
+  //     const { data } = await axios.get('http://localhost:5000/properties');
+  //     return data;
+  //   },
+  // });
 
   // CRUD Mutations
   const addTenantMutation = useMutation({
