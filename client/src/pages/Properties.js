@@ -10,10 +10,13 @@ export default function Properties() {
   const [formState, setFormState] = useState({
     property_name: '',
     location: '',
+    landlord_id: '',  // Added landlord_id
     number_of_rooms: '',
     occupied_rooms: '',
+    house_number: '',  // Added house_number
     price_bedsitter: '',
     price_one_bedroom: '',
+    price_two_bedroom: '', // Optional but added for consistency
   });
   const [editingProperty, setEditingProperty] = useState(null);
 
@@ -55,10 +58,13 @@ export default function Properties() {
     setFormState({
       property_name: '',
       location: '',
+      landlord_id: '',
       number_of_rooms: '',
       occupied_rooms: '',
+      house_number: '',
       price_bedsitter: '',
       price_one_bedroom: '',
+      price_two_bedroom: '',
     });
     setIsModalOpen(true);
   };
@@ -75,10 +81,16 @@ export default function Properties() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const formattedFormState = {
+      ...formState,
+      price_bedsitter: parseFloat(formState.price_bedsitter),
+      price_one_bedroom: parseFloat(formState.price_one_bedroom),
+      price_two_bedroom: parseFloat(formState.price_two_bedroom),
+    };
     if (editingProperty) {
-      editPropertyMutation.mutate({ ...formState, id: editingProperty.id });
+      editPropertyMutation.mutate({ ...formattedFormState, id: editingProperty.id });
     } else {
-      addPropertyMutation.mutate(formState);
+      addPropertyMutation.mutate(formattedFormState);
     }
   };
 

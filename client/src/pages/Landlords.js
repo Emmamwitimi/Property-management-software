@@ -11,7 +11,7 @@ export default function Landlords() {
     landlord_name: '',
     phone_number: '',
     email: '',
-      });
+  });
   const [editingLandlord, setEditingLandlord] = useState(null);
 
   // Fetch landlords list
@@ -46,20 +46,25 @@ export default function Landlords() {
     onSuccess: () => queryClient.invalidateQueries(['landlords']),
   });
 
-  // Define functions for handling add, edit, and delete operations
+  // Handle modal open for adding a new landlord
   const handleAdd = () => {
     setEditingLandlord(null);
     setFormState({
       landlord_name: '',
       phone_number: '',
       email: '',
-          });
+    });
     setIsModalOpen(true);
   };
 
+  // Handle modal open for editing an existing landlord
   const handleEdit = (landlord) => {
     setEditingLandlord(landlord);
-    setFormState(landlord);
+    setFormState({
+      landlord_name: landlord.landlord_name,
+      phone_number: landlord.phone_number,
+      email: landlord.email,
+    });
     setIsModalOpen(true);
   };
 
@@ -67,12 +72,23 @@ export default function Landlords() {
     deleteLandlordMutation.mutate(landlordId);
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { landlord_name, phone_number, email } = formState;
+
+    // Prepare the data for submission, filtering out any non-editable fields
+    const submitData = {
+      landlord_name,
+      phone_number,
+      email,
+      ...(editingLandlord && { id: editingLandlord.id }), // Include ID only if editing
+    };
+
     if (editingLandlord) {
-      editLandlordMutation.mutate({ ...formState, id: editingLandlord.id });
+      editLandlordMutation.mutate(submitData);
     } else {
-      addLandlordMutation.mutate(formState);
+      addLandlordMutation.mutate(submitData);
     }
   };
 
@@ -90,7 +106,7 @@ export default function Landlords() {
       accessorKey: 'email',
       header: 'Email',
     },
-      {
+    {
       accessorKey: 'properties_owned',
       header: 'Properties Owned',
       cell: ({ row }) => row.original.properties_owned?.length || 0,
