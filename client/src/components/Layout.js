@@ -10,9 +10,9 @@ export default function Layout() {
   return (
     // Create a div to wrap the entire layout with some utility classes:
     // `min-h-screen` makes the layout fill at least the height of the screen,
-    // `bg-gray-50` gives it a light gray background color.
+    // gray background color.
     <div className="min-h-screen bg-gray-50">
-      {/* Render the `Navbar` component at the top of the page, which could contain links or branding */}
+      {/* Render the `Navbar` component at the top of the page, which contains links or branding */}
       <Navbar />
 
       {/* Create a flex container to display the `Sidebar` next to the main content area */}
