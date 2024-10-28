@@ -30,7 +30,7 @@ export default function Tenants() {
   const { data: tenants, isLoading } = useQuery({
     queryKey: ['tenants'],
     queryFn: async () => {
-      const { data } = await axios.get('http://localhost:5000/tenants');
+      const { data } = await axios.get('https://property-management-software-5g9a.onrender.com/tenants');
       return data;
     },
   });
@@ -39,14 +39,14 @@ export default function Tenants() {
   // const { data: properties } = useQuery({
   //   queryKey: ['properties'],
   //   queryFn: async () => {
-  //     const { data } = await axios.get('http://localhost:5000/properties');
+  //     const { data } = await axios.get('https://property-management-software-5g9a.onrender.com/properties');
   //     return data;
   //   },
   // });
 
   // CRUD Mutations
   const addTenantMutation = useMutation({
-    mutationFn: (newTenant) => axios.post('http://localhost:5000/tenants', newTenant),
+    mutationFn: (newTenant) => axios.post('https://property-management-software-5g9a.onrender.com/tenants', newTenant),
     onSuccess: () => {
       queryClient.invalidateQueries(['tenants']);
       setIsModalOpen(false);
@@ -55,7 +55,7 @@ export default function Tenants() {
 
   const editTenantMutation = useMutation({
     mutationFn: (updatedTenant) =>
-      axios.put(`http://localhost:5000/tenants/${updatedTenant.id}`, updatedTenant),
+      axios.put(`https://property-management-software-5g9a.onrender.com/tenants/${updatedTenant.id}`, updatedTenant),
     onSuccess: () => {
       queryClient.invalidateQueries(['tenants']);
       setIsModalOpen(false);
@@ -63,7 +63,7 @@ export default function Tenants() {
   });
 
   const deleteTenantMutation = useMutation({
-    mutationFn: (tenantId) => axios.delete(`http://localhost:5000/tenants/${tenantId}`),
+    mutationFn: (tenantId) => axios.delete(`https://property-management-software-5g9a.onrender.com/tenants/${tenantId}`),
     onSuccess: () => queryClient.invalidateQueries(['tenants']),
   });
 

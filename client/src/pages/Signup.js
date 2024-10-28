@@ -19,7 +19,7 @@ export default function Signup() {
     }
 
     try {
-      await axios.post('http://localhost:5000/register', {
+      await axios.post('https://property-management-software-5g9a.onrender.com/register', {
         username,
         password,
       });

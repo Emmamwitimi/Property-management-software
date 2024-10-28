@@ -23,7 +23,7 @@ export function AuthProvider({ children }) {
   const login = async (username, password) => {
     try {
       // Make a POST request to login with username and password
-      const response = await axios.post("http://localhost:5000/login", {
+      const response = await axios.post("https://property-management-software-5g9a.onrender.com/login", {
         username,
         password,
       });

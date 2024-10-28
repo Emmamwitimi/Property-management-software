@@ -29,7 +29,7 @@
 //   const { data: tenantsData } = useQuery({
 //     queryKey: ['tenants'],
 //     queryFn: async () => {
-//       const { data } = await axios.get('http://localhost:5000/tenants');
+//       const { data } = await axios.get('https://property-management-software-5g9a.onrender.com/tenants');
 //       return data;
 //     },
 //   });
@@ -37,7 +37,7 @@
 //   const { data: landlordsData } = useQuery({
 //     queryKey: ['landlords'],
 //     queryFn: async () => {
-//       const { data } = await axios.get('http://localhost:5000/landlords');
+//       const { data } = await axios.get('https://property-management-software-5g9a.onrender.com/landlords');
 //       return data;
 //     },
 //   });
@@ -45,7 +45,7 @@
 //   const { data: propertiesData } = useQuery({
 //     queryKey: ['properties'],
 //     queryFn: async () => {
-//       const { data } = await axios.get('http://localhost:5000/properties');
+//       const { data } = await axios.get('https://property-management-software-5g9a.onrender.com/properties');
 //       return data;
 //     },
 //   });
@@ -153,7 +153,7 @@ export default function Dashboard() {
   const { data: tenantsData } = useQuery({
     queryKey: ['tenants'],
     queryFn: async () => {
-      const { data } = await axios.get('http://localhost:5000/tenants');
+      const { data } = await axios.get('https://property-management-software-5g9a.onrender.com/tenants');
       return data;
     },
   });
@@ -161,7 +161,7 @@ export default function Dashboard() {
   const { data: landlordsData } = useQuery({
     queryKey: ['landlords'],
     queryFn: async () => {
-      const { data } = await axios.get('http://localhost:5000/landlords');
+      const { data } = await axios.get('https://property-management-software-5g9a.onrender.com/landlords');
       return data;
     },
   });
@@ -169,7 +169,7 @@ export default function Dashboard() {
   const { data: propertiesData } = useQuery({
     queryKey: ['properties'],
     queryFn: async () => {
-      const { data } = await axios.get('http://localhost:5000/properties');
+      const { data } = await axios.get('https://property-management-software-5g9a.onrender.com/properties');
       return data;
     },
   });

@@ -24,14 +24,14 @@ export default function Properties() {
   const { data: properties, isLoading } = useQuery({
     queryKey: ['properties'],
     queryFn: async () => {
-      const { data } = await axios.get('http://localhost:5000/properties');
+      const { data } = await axios.get('https://property-management-software-5g9a.onrender.com/properties');
       return data;
     },
   });
 
   // Mutations for CRUD operations
   const addPropertyMutation = useMutation({
-    mutationFn: (newProperty) => axios.post('http://localhost:5000/properties', newProperty),
+    mutationFn: (newProperty) => axios.post('https://property-management-software-5g9a.onrender.com/properties', newProperty),
     onSuccess: () => {
       queryClient.invalidateQueries(['properties']);
       setIsModalOpen(false);
@@ -40,7 +40,7 @@ export default function Properties() {
 
   const editPropertyMutation = useMutation({
     mutationFn: (updatedProperty) =>
-      axios.put(`http://localhost:5000/properties/${updatedProperty.id}`, updatedProperty),
+      axios.put(`https://property-management-software-5g9a.onrender.com/properties/${updatedProperty.id}`, updatedProperty),
     onSuccess: () => {
       queryClient.invalidateQueries(['properties']);
       setIsModalOpen(false);
@@ -48,7 +48,7 @@ export default function Properties() {
   });
 
   const deletePropertyMutation = useMutation({
-    mutationFn: (propertyId) => axios.delete(`http://localhost:5000/properties/${propertyId}`),
+    mutationFn: (propertyId) => axios.delete(`https://property-management-software-5g9a.onrender.com/properties/${propertyId}`),
     onSuccess: () => queryClient.invalidateQueries(['properties']),
   });
 
